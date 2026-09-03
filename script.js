@@ -43,6 +43,9 @@ const sortBySelect = document.getElementById("sortBy");
 const ledgerBody = document.getElementById("ledgerBody");
 const emptyState = document.getElementById("emptyState");
 
+const monthlyBody = document.getElementById("monthlyBody");
+const monthlyEmptyState = document.getElementById("monthlyEmptyState");
+
 const balanceValue = document.getElementById("balanceValue");
 const incomeValue = document.getElementById("incomeValue");
 const expenseValue = document.getElementById("expenseValue");
@@ -226,7 +229,66 @@ function getFilteredAndSortedTransactions() {
 // ---------- Rendering ----------
 function render() {
   renderSummary();
+  renderMonthlySummary();
   renderLedger();
+}
+
+// ---------- Monthly summary ----------
+// Groups all transactions by their year-month (e.g. "2026-09") and totals
+// income, expenses, and net for each month, most recent month first.
+function getMonthlyTotals() {
+  const monthMap = {};
+
+  transactions.forEach((t) => {
+    const monthKey = t.date.slice(0, 7); // "YYYY-MM"
+    if (!monthMap[monthKey]) {
+      monthMap[monthKey] = { income: 0, expense: 0 };
+    }
+    if (t.type === "income") {
+      monthMap[monthKey].income += t.amount;
+    } else {
+      monthMap[monthKey].expense += t.amount;
+    }
+  });
+
+  return Object.keys(monthMap)
+    .sort((a, b) => b.localeCompare(a))
+    .map((key) => ({
+      key,
+      label: formatMonthLabel(key),
+      income: monthMap[key].income,
+      expense: monthMap[key].expense,
+      net: monthMap[key].income - monthMap[key].expense,
+    }));
+}
+
+function formatMonthLabel(monthKey) {
+  const [year, month] = monthKey.split("-");
+  const d = new Date(Number(year), Number(month) - 1, 1);
+  return d.toLocaleDateString("en-IN", { month: "long", year: "numeric" });
+}
+
+function renderMonthlySummary() {
+  const monthlyTotals = getMonthlyTotals();
+  monthlyBody.innerHTML = "";
+
+  if (monthlyTotals.length === 0) {
+    monthlyEmptyState.hidden = false;
+    return;
+  }
+  monthlyEmptyState.hidden = true;
+
+  monthlyTotals.forEach((m) => {
+    const row = document.createElement("div");
+    row.className = "monthly-row";
+    row.innerHTML = `
+      <span class="col col-month">${m.label}</span>
+      <span class="col col-month-income">${formatCurrency(m.income)}</span>
+      <span class="col col-month-expense">${formatCurrency(m.expense)}</span>
+      <span class="col col-month-net ${m.net >= 0 ? "positive" : "negative"}">${m.net < 0 ? "-" : ""}${formatCurrency(m.net)}</span>
+    `;
+    monthlyBody.appendChild(row);
+  });
 }
 
 function renderSummary() {
