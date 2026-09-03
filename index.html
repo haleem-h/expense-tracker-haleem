@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ledger — Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- Header -->
+    <header class="masthead">
+      <h1 class="wordmark">Ledger</h1>
+      <p class="subtitle">Your income and expenses, kept in one place.</p>
+    </header>
+
+    <!-- Summary -->
+    <section class="summary" aria-label="Summary">
+      <div class="summary-item">
+        <span class="summary-label">Balance</span>
+        <span class="summary-value" id="balanceValue">₹0.00</span>
+      </div>
+      <div class="summary-divider" aria-hidden="true"></div>
+      <div class="summary-item">
+        <span class="summary-label">Income</span>
+        <span class="summary-value income" id="incomeValue">₹0.00</span>
+      </div>
+      <div class="summary-divider" aria-hidden="true"></div>
+      <div class="summary-item">
+        <span class="summary-label">Expenses</span>
+        <span class="summary-value expense" id="expenseValue">₹0.00</span>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section class="entry" aria-label="Add transaction">
+      <h2 class="section-title" id="formTitle">Add a transaction</h2>
+      <form id="transactionForm" novalidate>
+        <input type="hidden" id="transactionId" />
+
+        <div class="field-row">
+          <div class="field">
+            <label for="type">Type</label>
+            <select id="type" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" placeholder="0.00" step="0.01" min="0.01" required />
+          </div>
+
+          <div class="field">
+            <label for="date">Date</label>
+            <input type="date" id="date" required />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="category">Category</label>
+            <input type="text" id="category" list="categoryList" placeholder="e.g. Food, Rent, Salary" required />
+            <datalist id="categoryList">
+              <option value="Salary"></option>
+              <option value="Freelance"></option>
+              <option value="Food"></option>
+              <option value="Rent"></option>
+              <option value="Travel"></option>
+              <option value="Utilities"></option>
+              <option value="Shopping"></option>
+              <option value="Other"></option>
+            </datalist>
+          </div>
+
+          <div class="field field-wide">
+            <label for="description">Description</label>
+            <input type="text" id="description" placeholder="Short note (optional)" />
+          </div>
+        </div>
+
+        <p class="form-error" id="formError" role="alert"></p>
+
+        <div class="field-row actions-row">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Add transaction</button>
+          <button type="button" class="btn btn-ghost" id="cancelEditBtn" hidden>Cancel edit</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters" aria-label="Filter transactions">
+      <div class="field">
+        <label for="filterType">Show</label>
+        <select id="filterType">
+          <option value="all">All transactions</option>
+          <option value="income">Income only</option>
+          <option value="expense">Expenses only</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="filterCategory">Category</label>
+        <select id="filterCategory">
+          <option value="all">All categories</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy">
+          <option value="date-desc">Date (newest first)</option>
+          <option value="date-asc">Date (oldest first)</option>
+          <option value="amount-desc">Amount (high to low)</option>
+          <option value="amount-asc">Amount (low to high)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Transaction list -->
+    <section class="ledger" aria-label="Transactions">
+      <div class="ledger-head">
+        <span class="col col-date">Date</span>
+        <span class="col col-category">Category</span>
+        <span class="col col-description">Description</span>
+        <span class="col col-amount">Amount</span>
+        <span class="col col-actions">Actions</span>
+      </div>
+
+      <div id="ledgerBody">
+        <!-- rows injected by script.js -->
+      </div>
+
+      <p class="empty-state" id="emptyState" hidden>
+        No transactions yet. Add your first one above.
+      </p>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
