@@ -1,6 +1,8 @@
 # Vault — Expense Tracker
 
-A simple, no-framework expense tracker built with plain HTML, CSS, and JavaScript. Add income or expense transactions, edit or delete them, filter and sort the list, and see your running balance — all saved in the browser's Local Storage, so your data is still there after a refresh.
+This is an Expense Tracker web app, which I've named **Vault**. It's built with plain HTML, CSS, and JavaScript. Add income or expense transactions, edit or delete them, filter and sort the list, and see your running balance — all saved in the browser's Local Storage, so your data is still there after a refresh.
+
+**Live demo:** For convenience, I've deployed this on GitHub Pages, so you can check it out directly here: https://haleem-h.github.io/expense-tracker-haleem/
 
 ## Features
 
