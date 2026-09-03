@@ -1,16 +1,17 @@
 /* ---------- Tokens ---------- */
 :root {
-  --paper: #F6F4EF;
-  --surface: #FCFBF8;
-  --ink: #20241F;
-  --ink-soft: #5B5A50;
-  --line: #D9D4C7;
-  --line-strong: #B7B09D;
-  --income: #3C6E47;
-  --income-soft: #E4EEE3;
-  --expense: #A63D2E;
-  --expense-soft: #F4E4E0;
-  --balance: #1F3A5F;
+  --paper: #0B0B0C;
+  --surface: #17181A;
+  --ink: #ECEDEE;
+  --ink-soft: #9A9CA0;
+  --line: #232426;
+  --line-strong: #47484C;
+  --income: #6FCF97;
+  --income-soft: rgba(111, 207, 151, 0.14);
+  --expense: #E5645A;
+  --expense-soft: rgba(229, 100, 90, 0.14);
+  --balance: #C9CBCE;
+  --input-bg: #1B1C1E;
 
   --font-display: "Fraunces", serif;
   --font-mono: "IBM Plex Mono", monospace;
@@ -142,8 +143,18 @@ select {
   color: var(--ink);
   padding: 10px 12px;
   border: 1px solid var(--line-strong);
-  background: #fff;
+  background: var(--input-bg);
   border-radius: 2px;
+}
+
+input::placeholder {
+  color: #6B6C70;
+}
+
+/* Native date/select icons need to be visible on a dark background */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.85);
+  cursor: pointer;
 }
 
 input:focus,
@@ -199,6 +210,71 @@ button:focus-visible {
 .filters .field {
   min-width: 160px;
   flex: none;
+}
+
+/* ---------- Monthly summary ---------- */
+.monthly {
+  margin-bottom: 32px;
+  border-top: 1px solid var(--line-strong);
+  padding-top: 20px;
+}
+
+.monthly-head {
+  display: grid;
+  grid-template-columns: 1fr 130px 130px 130px;
+  gap: 12px;
+  padding: 10px 4px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.monthly-row {
+  display: grid;
+  grid-template-columns: 1fr 130px 130px 130px;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
+  align-items: center;
+}
+
+.monthly-row .col-month {
+  font-family: var(--font-display);
+}
+
+.monthly-row .col-month-income,
+.monthly-row .col-month-expense,
+.monthly-row .col-month-net {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-align: right;
+}
+
+.monthly-row .col-month-income { color: var(--income); }
+.monthly-row .col-month-expense { color: var(--expense); }
+.monthly-row .col-month-net.positive { color: var(--income); }
+.monthly-row .col-month-net.negative { color: var(--expense); }
+
+@media (max-width: 640px) {
+  .monthly-head {
+    display: none;
+  }
+
+  .monthly-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .monthly-row .col-month-income,
+  .monthly-row .col-month-expense,
+  .monthly-row .col-month-net {
+    text-align: left;
+  }
+
+  .monthly-row .col-month-income::before { content: "Income: "; color: var(--ink-soft); font-weight: 400; }
+  .monthly-row .col-month-expense::before { content: "Expenses: "; color: var(--ink-soft); font-weight: 400; }
+  .monthly-row .col-month-net::before { content: "Net: "; color: var(--ink-soft); font-weight: 400; }
 }
 
 /* ---------- Ledger table ---------- */

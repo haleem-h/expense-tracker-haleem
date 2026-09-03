@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ledger — Expense Tracker</title>
+  <title>Vault — Expense Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 
     <!-- Header -->
     <header class="masthead">
-      <h1 class="wordmark">Ledger</h1>
+      <h1 class="wordmark">Vault</h1>
       <p class="subtitle">Your income and expenses, kept in one place.</p>
     </header>
 
@@ -119,6 +119,21 @@
           <option value="amount-asc">Amount (low to high)</option>
         </select>
       </div>
+    </section>
+
+    <!-- Monthly summary -->
+    <section class="monthly" aria-label="Monthly summary">
+      <h2 class="section-title">Monthly summary</h2>
+      <div class="monthly-head">
+        <span class="col col-month">Month</span>
+        <span class="col col-month-income">Income</span>
+        <span class="col col-month-expense">Expenses</span>
+        <span class="col col-month-net">Net</span>
+      </div>
+      <div id="monthlyBody"></div>
+      <p class="empty-state" id="monthlyEmptyState" hidden>
+        Add a transaction to see a monthly breakdown.
+      </p>
     </section>
 
     <!-- Transaction list -->

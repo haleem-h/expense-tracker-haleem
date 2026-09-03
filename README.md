@@ -1,4 +1,4 @@
-# Ledger — Expense Tracker
+# Vault — Expense Tracker
 
 A simple, no-framework expense tracker built with plain HTML, CSS, and JavaScript. Add income or expense transactions, edit or delete them, filter and sort the list, and see your running balance — all saved in the browser's Local Storage, so your data is still there after a refresh.
 
